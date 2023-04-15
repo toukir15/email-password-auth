@@ -8,9 +8,13 @@ const Resister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const handleSubmit = (event) => {
     // 1. prevent page refresh
     event.preventDefault();
+    setSuccess("");
+    setError("");
     // 2. collect form data
     const email = event.target.email.value;
     const password = event.target.password.value;
@@ -21,6 +25,8 @@ const Resister = () => {
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
+        event.target.reset();
+        setSuccess("user has been create successfully");
       })
       .catch((error) => {
         console.error(error);
@@ -45,6 +51,7 @@ const Resister = () => {
           name="email"
           id="email"
           placeholder="Your Email"
+          required
         />
         <br />
         <input
@@ -53,11 +60,13 @@ const Resister = () => {
           name="password"
           id="password"
           placeholder="Your Password"
+          required
         />
         <br />
         <input type="submit" value="Submit" />
       </form>
       <p className="text-danger">{error}</p>
+      <p className="text-success">{success}</p>
     </div>
   );
 };
