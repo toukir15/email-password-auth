@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth(app);
 
 const Resister = () => {
-  const [email, setEmail] = "";
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(email, password);
+
+    // create user in fb
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleEmailChange = (event) => {
