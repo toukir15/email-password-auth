@@ -11,8 +11,11 @@ const Header = () => {
       <Link to="/Login">
         <a href="">Login</a>
       </Link>
-      <Link to="/Resister">
+      <Link to="/resister">
         <a href="">Resister</a>
+      </Link>
+      <Link to="/resister-rbs">
+        <a href="">Resister-RBS</a>
       </Link>
     </nav>
   );
