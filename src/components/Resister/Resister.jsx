@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import { getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import app from "../firebase/firebase.config";
 
 const auth = getAuth(app);
 
 const Resister = () => {
   const [email, setEmail] = useState("");
-
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const handleSubmit = (event) => {
+    // 1. prevent page refresh
     event.preventDefault();
+    // 2. collect form data
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(email, password);
 
-    // create user in fb
+    //3.create user in fb
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const loggedUser = result.user;
@@ -20,23 +24,31 @@ const Resister = () => {
       })
       .catch((error) => {
         console.error(error);
+        setError(error.message);
       });
   };
 
-  const handleEmailChange = (event) => {
+  const handleEmail = (event) => {
     setEmail(event.target.value);
   };
 
-  // const handlePasswordBlur = event => {
-
-  // }
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
+  };
   return (
     <div>
       <h2>Resister</h2>
       <form onSubmit={handleSubmit}>
-        <input type="email" name="email" id="email" placeholder="Your Email" />
+        <input
+          onChange={handleEmail}
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Your Email"
+        />
         <br />
         <input
+          onChange={handlePassword}
           type="password"
           name="password"
           id="password"
@@ -45,6 +57,7 @@ const Resister = () => {
         <br />
         <input type="submit" value="Submit" />
       </form>
+      <p className="text-danger">{error}</p>
     </div>
   );
 };
