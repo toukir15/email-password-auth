@@ -19,6 +19,9 @@ const Resister = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(email, password);
+    if (!/^(?=.*?[A-Z])/.test(password)) {
+      setError("One upercase");
+    }
 
     //3.create user in fb
     createUserWithEmailAndPassword(auth, email, password)
